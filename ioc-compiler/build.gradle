@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+
+
+android {
+  compileSdkVersion 27
+  buildToolsVersion "28.0.2"
+
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+
+  testCompile 'junit:junit:4.12'
+  compile project(':ioc-annotation')
+
+  annotationProcessor ('com.google.auto.service:auto-service:1.0-rc2')
+
+  // auto-service库可以帮我们去生成META-INF等信息。
+  compile 'com.google.auto.service:auto-service:1.0-rc2'
+  // 如果找不到javax包，可以直接引入本地jdk的jar包
+  compile files ('/Applications/Android Studio 3.0 Preview.app/Contents/jre/jdk/Contents/Home/jre/lib/rt.jar')
+
+  targetCompatibility = '1.7'
+  sourceCompatibility = '1.7'
+}
